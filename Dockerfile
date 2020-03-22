@@ -1,7 +1,7 @@
-FROM openjdk:8-jre-slim
+FROM openjdk:11-jdk-slim
 
-ARG MIRROR="https://repo1.maven.org/maven2/com/facebook/presto"
-ARG PRESTO_VERSION="0.216"
+ARG MIRROR="https://repo1.maven.org/maven2/io/prestosql"
+ARG PRESTO_VERSION="331"
 ARG PRESTO_BIN="${MIRROR}/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz"
 ARG PRESTO_CLI_BIN="${MIRROR}/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar"
 
@@ -36,11 +36,8 @@ RUN mkdir -p $PRESTO_HOME && \
     chmod +x presto && \
     chown -R ${PRESTO_USER}:${PRESTO_USER} $PRESTO_HOME
 
-# Need to work with python2
-# See: https://github.com/prestodb/presto/issues/4678
-ENV PYTHON2_DEBIAN_VERSION 2.7.13-2
 RUN apt-get update && apt-get install -y --no-install-recommends \
-		python="${PYTHON2_DEBIAN_VERSION}" \
+		python \
 	&& rm -rf /var/lib/apt/lists/* \
     && cd /usr/local/bin \
 	&& rm -rf idle pydoc python python-config 
