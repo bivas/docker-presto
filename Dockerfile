@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-slim
+FROM openjdk:11-jdk-slim
 
 ARG MIRROR="https://repo1.maven.org/maven2/io/prestosql"
 ARG PRESTO_VERSION="331"
